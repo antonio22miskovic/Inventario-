@@ -11,7 +11,13 @@ RUN apt-get update && apt-get install -y \
     unzip \
     nodejs \
     npm \
-    && docker-php-ext-install intl pdo_mysql zip mbstring
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install intl pdo_mysql zip mbstring exif bcmath
 
 # Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -22,14 +28,17 @@ WORKDIR /var/www/html
 # Copiar los archivos al contenedor
 COPY . .
 
+# Limpiar caché de Composer
+RUN composer clear-cache
+
 # Instalar dependencias de PHP
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-plugins
 
 # Instalar dependencias de Node.js
 RUN npm install && npm run build
 
 # Configurar permisos
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html
 
 # Cachear la configuración de Laravel
 RUN php artisan config:cache && \
