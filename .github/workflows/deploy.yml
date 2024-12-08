@@ -23,6 +23,7 @@ jobs:
       # Paso 3: Instalar dependencias de PHP
       - name: Install dependencies
         run: |
+          composer install --no-dev --optimize-autoloader
           npm install
           npm run build
 
