@@ -49,7 +49,7 @@ return [
             'host' => env('DB_HOST', 'dpg-ctb07256l47c73bqvji0-a'),
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'testing_oberstaff'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'username' => env('DB_USERNAME', 'test'),
             'password' => env('DB_PASSWORD', 'kLLuSz7R2WUMlWbVbD4CaFZOZSsKx92o'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
