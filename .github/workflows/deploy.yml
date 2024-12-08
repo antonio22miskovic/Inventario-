@@ -29,7 +29,9 @@ jobs:
 
       # Paso 4: Ejecutar las migraciones
       - name: Run migrations
-        run: php artisan migrate --force
+        run: /
+          php artisan optimize:clear
+          php artisan migrate --force
 
       # Paso 5: Ejecutar los seeders
       - name: Run seeders
