@@ -251,6 +251,7 @@
                         'La categoria ha sido creado con exito.',
                         'success'
                     );
+                    $('#createCategoryForm')[0].reset();
                 }
             });
         });
@@ -273,6 +274,7 @@
                     );
                     $('#editCategoryModal').modal('hide');
                     $('#categories-table').DataTable().ajax.reload(); // Recargar la tabla
+                    
                 },
                 error: function(xhr) {
                     Swal.fire(

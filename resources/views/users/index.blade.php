@@ -15,19 +15,20 @@
         <!-- Botón centrado -->
         <h3 class="text-center">Movimientos</h3>
         <div class="d-flex mb-3">
-            <b<button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Crear Usuario</button>
+             <button class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">Crear Usuario</button>
         </div>
-
-        <table id="users-table" class="table table-bordered ">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="table-responsive">
+            <table id="users-table" class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         </div>
     </div>
 </div>
@@ -57,8 +58,11 @@
                     <div class="form-group">
                         <label for="role">Rol</label>
                         <select class="form-control" id="role" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="user">Usuario</option>
+                            @foreach (Spatie\Permission\Models\Role::orderBy('id','desc')->get() as $item)
+                                <option value="{{$item->name}}">{{$item->name}}</option>
+                            @endforeach
+                            {{-- <option value="admin">Admin</option>
+                            <option value="user">Usuario</option> --}}
                         </select>
                     </div>
                     <div class="form-group">
@@ -191,6 +195,8 @@ $.ajaxSetup({
             $('#createUserModal').modal('hide');  // Cerrar el modal
             $('#users-table').DataTable().ajax.reload();  // Recargar la tabla de usuarios
             Swal.fire('Éxito', 'Usuario creado correctamente.', 'success');  // Mostrar notificación
+            $('#createUserForm')[0].reset(); // Resetear el formulario
+
         },
         error: function(xhr) {
             Swal.fire('Error', 'Hubo un problema al crear el usuario.', 'error');

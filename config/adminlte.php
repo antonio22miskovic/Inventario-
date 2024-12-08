@@ -325,38 +325,40 @@ return [
             'url'  => 'products',
             'icon' => 'fas fa-box',
             'label' => 'Nuevo',
-            'label_color' => 'success'
+            'label_color' => 'success',
+            'can'  => 'manage products'
         ],
         [
             'text' => 'Categorías',
             'url'  => 'categories',
             'icon' => 'fas fa-tags',
+            'can'  => 'admin',
         ],
         [
             'text'        => 'Movimientos de Productos',
             'url'         => 'product_movements',  // Ruta al controlador
             'icon'        => 'fas fa-exchange-alt', // Icono de FontAwesome (puedes cambiarlo)
             // 'label'       => '',
-            // 'label_color' => 'success',
+            'can'  => 'manage movements',
         ],
         [
             'text' => 'Estadísticas',
             'url'  => 'statistics',
             'icon' => 'fas fa-chart-line',
-            'role' => 'role:admin', // Solo accesible para admin
+            'can'  => 'view stats', // Solo accesible para admin
         ],
         [
             'text' => 'Gestión de Usuarios',
             'url'  => 'users',
             'icon' => 'fas fa-users',
-            // 'can'  => 'role:admin', // Asegura que solo el admin pueda ver este menú
+            'can' => 'admin', // Asegura que solo el admin pueda ver este menú
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'Cambiar Contraseña',
             'url'  => 'change-password',
             'icon' => 'fas fa-eye', // Icono de ojo
-            'role' => 'role:admin', // Solo accesible para admin
+            'can' => 'admin', // Solo accesible para admin
         ],
     
        

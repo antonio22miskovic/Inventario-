@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        // php artisan db:seed --class=CategorySeeder
+        // php artisan db:seed --class=ProductSeeder
+        // php artisan db:seed --class=RolePermissionSeeder
     }
 }

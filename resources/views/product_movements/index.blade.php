@@ -144,7 +144,7 @@ $.ajaxSetup({
                         'Movimiento creado con exito.',
                         'success'
                     );
-
+                    $('#createMovementForm')[0].reset(); 
                 },
                 error: function(xhr) {
                     alert('Error al registrar el movimiento.');

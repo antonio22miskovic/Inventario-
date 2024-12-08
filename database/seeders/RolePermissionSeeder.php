@@ -16,12 +16,18 @@ class RolePermissionSeeder extends Seeder
     {
         // Crear roles
         $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        $userRole1  = Role::create(['name' => 'user']);
+        $userRole2  = Role::create(['name' => 'user_stats']);
+        $userRole3  = Role::create(['name' => 'user_movements']);
 
         // Crear permisos
         $permissions = [
+            'admin',
+            'manage users',
             'manage products',
-            'view dashboard',
+            'manage categories',
+            'view stats',
+            'manage movements'
         ];
 
         foreach ($permissions as $permission) {
@@ -30,6 +36,9 @@ class RolePermissionSeeder extends Seeder
 
         // Asignar permisos al rol admin
         $adminRole->givePermissionTo($permissions);
+        $userRole1->givePermissionTo(['manage products']);
+        $userRole2->givePermissionTo(['view stats']);
+        $userRole3->givePermissionTo(['manage movements']);
 
         $user = User::firstOrCreate([
             'email' => 'admin@test.com',

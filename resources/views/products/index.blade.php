@@ -351,6 +351,7 @@
                         'El producto ha sido creado con exito.',
                         'success'
                     );
+                    $('#createProductForm')[0].reset(); 
                 }
             });
         });

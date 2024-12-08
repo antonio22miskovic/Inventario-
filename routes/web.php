@@ -32,33 +32,40 @@ Route::get('/register', function () {
 
 Auth::routes();
 
-Route::middleware(['role:admin|user'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('products', ProductController::class)->middleware('role:admin');
+Route::get('/home', [HomeController::class, 'index'])->middleware('role:admin|user_stats|user_movements|user')->middleware('role:admin|user_stats|user_movements|user')->name('home');
+
+
+
+Route::resource('product_movements', ProductMovementController::class)->middleware('role:admin|user_movements');
+Route::get('datetable/product_movements/data', [ProductMovementController::class, 'getMovements'])->middleware('role:admin|user_movements')->name('product_movements.data');
+
+    
+
+Route::middleware('role:admin|user')->group(function () {
+
+    Route::resource('products', ProductController::class);
     Route::get('datetable/product', [TableProduct::class, 'get'])->name('products.table');
+
+});
+
+Route::middleware('role:admin|user_stats')->group(function () {
+    Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics');
+});
+
+Route::middleware('role:admin')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::get('/roles', function() {
+        return response()->json(Spatie\Permission\Models\Role::orderBy('id','desc')->get());  // Devolver todos los roles en formato JSON
+    });
 
     Route::resource('categories', CategoryController::class)->middleware('role:admin');
     Route::get('datetable/data', [CategoryController::class, 'getCategories'])->name('categories.data');
 
-
-    Route::resource('product_movements', ProductMovementController::class);
-    Route::get('datetable/product_movements/data', [ProductMovementController::class, 'getMovements'])->name('product_movements.data');
-
-    Route::get('/statistics', [StatisticsController::class, 'index'])->middleware('role:admin')->name('statistics');
-
-});
-
-Route::middleware(['role:admin'])->group(function () {
-    Route::resource('users', UserController::class);
-    Route::get('/roles', function() {
-        return response()->json(App\Models\Role::all());  // Devolver todos los roles en formato JSON
-    });
-
     // Ruta para mostrar el formulario de cambio de contraseña
-Route::get('/change-password', [UserController::class, 'showChangePasswordForm'])->middleware('role:admin')->name('change-password');
+    Route::get('/change-password', [UserController::class, 'showChangePasswordForm'])->middleware('role:admin')->name('change-password');
 
-// Ruta para procesar el cambio de contraseña
-Route::post('/change-password', [UserController::class, 'changePassword'])->middleware('role:admin')->name('change-password.update');
+    // Ruta para procesar el cambio de contraseña
+    Route::post('/change-password', [UserController::class, 'changePassword'])->middleware('role:admin')->name('change-password.update');
 
 });
 
