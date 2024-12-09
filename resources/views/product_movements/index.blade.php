@@ -17,16 +17,18 @@
             <button class="btn btn-primary" data-toggle="modal" data-target="#createMovementModal">Registrar Movimiento</button>
         </div>
 
-        <table id="product-movements-table" class="table table-bordered ">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Tipo de Movimiento</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-        </table>
+        <div class="table-responsive">
+            <table id="product-movements-table" class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Tipo de Movimiento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         </div>
     </div>
 </div>
