@@ -334,12 +334,12 @@
     </script>
 
     <script>
-        $('#createProductForm').submit(function(e) {
+        $('#createProductForm').submit( async function(e) {
             e.preventDefault();
-
+            $(this).disabled = true;
             var formData = $(this).serialize();
             
-            $.ajax({
+            await $.ajax({
                 url: '{{ route('products.store') }}',
                 type: 'POST',
                 data: formData,
@@ -352,8 +352,13 @@
                         'success'
                     );
                     $('#createProductForm')[0].reset(); 
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseJSON.message);
+                    Swal.fire('Error', xhr.responseJSON.message , 'error');
                 }
             });
+            $(this).disabled = false;
         });
     </script>
 @stop

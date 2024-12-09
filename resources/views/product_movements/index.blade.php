@@ -46,6 +46,10 @@
                     </button>
                 </div>
                 <form id="createMovementForm">
+
+                    <!-- Donde se mostrará el mensaje de error -->
+                    <div id="error-message" class="text-center" style="color: red; display: none;"></div>
+
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="product_id">Producto</label>
@@ -129,15 +133,15 @@ $.ajaxSetup({
         });
 
         // Guardar movimiento
-        $('#createMovementForm').submit(function(e) {
+        $('#createMovementForm').submit( async function(e) {
             e.preventDefault();
-
-            $.ajax({
+            $(this).disabled = true;
+            await $.ajax({
                 url: '{{ route('product_movements.store') }}',
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
-                    $('#createMovementForm').modal('hide');
+                    $('#createMovementModal').modal('hide');
                     $('#product-movements-table').DataTable().ajax.reload();
                     Swal.fire(
                         'Creado',
@@ -145,11 +149,20 @@ $.ajaxSetup({
                         'success'
                     );
                     $('#createMovementForm')[0].reset(); 
+                    document.getElementById('error-message').textContent = '';
                 },
                 error: function(xhr) {
-                    alert('Error al registrar el movimiento.');
+                    // Comprobar si hay errores y mostrarlos en la vista
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        // Mostrar el error en el frontend
+                        document.getElementById('error-message').textContent = xhr.responseJSON.error;
+                        document.getElementById('error-message').style.display = 'block';
+                    } else {
+                        alert('Error al registrar el movimiento.');
+                    }
                 }
             });
+            $(this).disabled = false;
         });
 
         // Eliminar movimiento

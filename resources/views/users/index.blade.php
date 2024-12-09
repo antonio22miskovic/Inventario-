@@ -183,26 +183,28 @@ $.ajaxSetup({
             });
         });
 
-        $('#createUserForm').submit(function(e) {
-    e.preventDefault();  // Prevenir la recarga de la página
-    var formData = $(this).serialize();  // Obtener los datos del formulario
+        $('#createUserForm').submit( async function(e) {
+            e.preventDefault();  // Prevenir la recarga de la página
+            var formData = $(this).serialize();  // Obtener los datos del formulario
+            $(this).disabled = true;
+            await $.ajax({
+                url: '/users',  // Ruta para crear el usuario
+                method: 'POST',
+                data: formData,
+                success: function(data) {
+                    $('#createUserModal').modal('hide');  // Cerrar el modal
+                    $('#users-table').DataTable().ajax.reload();  // Recargar la tabla de usuarios
+                    Swal.fire('Éxito', 'Usuario creado correctamente.', 'success');  // Mostrar notificación
+                    $('#createUserForm')[0].reset(); // Resetear el formulario
 
-    $.ajax({
-        url: '/users',  // Ruta para crear el usuario
-        method: 'POST',
-        data: formData,
-        success: function(data) {
-            $('#createUserModal').modal('hide');  // Cerrar el modal
-            $('#users-table').DataTable().ajax.reload();  // Recargar la tabla de usuarios
-            Swal.fire('Éxito', 'Usuario creado correctamente.', 'success');  // Mostrar notificación
-            $('#createUserForm')[0].reset(); // Resetear el formulario
-
-        },
-        error: function(xhr) {
-            Swal.fire('Error', 'Hubo un problema al crear el usuario.', 'error');
-        }
-    });
-});
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseJSON.message                    );
+                    Swal.fire('Error', xhr.responseJSON.message , 'error');
+                }
+            });
+            $(this).disabled = false;
+        });
 
 
 

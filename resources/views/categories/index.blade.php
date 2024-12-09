@@ -234,12 +234,12 @@
             
         }
 
-        $('#createCategoryForm').submit(function(e) {
+        $('#createCategoryForm').submit( async function(e) {
             e.preventDefault();
-
+            $(this).disabled = true;
             var formData = $(this).serialize();
             
-            $.ajax({
+            await $.ajax({
                 url: '{{ route('categories.store') }}',
                 type: 'POST',
                 data: formData,
@@ -252,8 +252,13 @@
                         'success'
                     );
                     $('#createCategoryForm')[0].reset();
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseJSON.message);
+                    Swal.fire('Error', xhr.responseJSON.message , 'error');
                 }
             });
+            $(this).disabled = false;
         });
 
         $('#editCategoryForm').submit(function(e) {

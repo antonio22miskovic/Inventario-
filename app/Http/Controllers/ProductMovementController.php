@@ -27,7 +27,7 @@ class ProductMovementController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -35,20 +35,38 @@ class ProductMovementController extends Controller
             'quantity' => 'required|integer|min:1',
             'movement_type' => 'required|in:entrada,salida',
         ]);
-
+    
+        // Obtenemos el producto
+        $product = Product::findOrFail($request->product_id);
+    
+        // Si es un movimiento de salida, verificamos que haya suficiente stock
+        if ($request->movement_type === 'salida') {
+            // Sumamos todas las salidas previas de este producto
+            $totalSalidas = $product->movements()->where('movement_type', 'salida')->sum('quantity');
+            
+            // Calculamos el stock disponible
+            $stockDisponible = $product->stock - $totalSalidas;
+    
+            // Si la cantidad solicitada supera el stock disponible, retornamos un error
+            if ($request->quantity > $stockDisponible) {
+                return response()->json(['error' => 'No hay suficiente stock disponible para esta salida.'], 400);
+            }
+        }
+    
+        // Registramos el movimiento
         ProductMovement::create($request->all());
         
-        // Actualizar el stock del producto
-        $product = Product::findOrFail($request->product_id);
+        // Actualizamos el stock del producto
         if ($request->movement_type === 'entrada') {
             $product->stock += $request->quantity;
         } else {
             $product->stock -= $request->quantity;
         }
         $product->save();
-
+    
         return response()->json(['message' => 'Movimiento registrado con éxito']);
     }
+    
 
     public function destroy($id)
     {
