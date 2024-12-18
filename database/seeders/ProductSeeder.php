@@ -15,22 +15,22 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         // Crear productos
-        $category = Category::where('name', 'Electronics')->first();
+        $category  = Category::where('name', 'Electronics')->first();
         $category2 = Category::where('name', 'Furniture')->first();
 
         Product::create([
-            'name' => 'Laptop',
+            'name'        => 'Laptop',
             'description' => 'A powerful laptop with 16GB RAM and 512GB SSD.',
-            'price' => 1000.00,
-            'stock' => 50,
+            'price'       => 1000.00,
+            'stock'       => 50,
             'category_id' => $category->id
         ]);
 
         Product::create([
-            'name' => 'Office Chair',
+            'name'        => 'Office Chair',
             'description' => 'Ergonomic chair for office use.',
-            'price' => 150.00,
-            'stock' => 30,
+            'price'       => 150.00,
+            'stock'       => 30,
             'category_id' => $category2->id
         ]);
     }

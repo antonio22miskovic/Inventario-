@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'Inventario',
+    'title'        => 'Inventario',
     'title_prefix' => 'oberstaff',
-    'title_postfix' => '',
+    'title_postfix'=> '',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only'     => false,
     'use_full_favicon' => false,
 
     /*
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>Inventario</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_xl' => null,
+    'logo'              => '<b>Inventario</b>',
+    'logo_img'          => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img_class'    => 'brand-image img-circle elevation-3',
+    'logo_img_xl'       => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_alt'      => 'Admin Logo',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,11 +85,11 @@ return [
 
     'auth_logo' => [
         'enabled' => false,
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
-            'class' => '',
-            'width' => 50,
+        'img'     => [
+            'path'   => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'alt'    => 'Auth Logo',
+            'class'  => '',
+            'width'  => 50,
             'height' => 50,
         ],
     ],
@@ -111,12 +111,12 @@ return [
 
     'preloader' => [
         'enabled' => true,
-        'mode' => 'fullscreen',
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+        'mode'    => 'fullscreen',
+        'img'     => [
+            'path'   => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'alt'    => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
+            'width'  => 60,
             'height' => 60,
         ],
     ],
@@ -133,12 +133,12 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_enabled'      => true,
+    'usermenu_header'       => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => false,
-    'usermenu_desc' => false,
-    'usermenu_profile_url' => false,
+    'usermenu_image'        => false,
+    'usermenu_desc'         => false,
+    'usermenu_profile_url'  => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -152,12 +152,12 @@ return [
     |
     */
 
-    'layout_topnav' => null,
-    'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_topnav'       => null,
+    'layout_boxed'        => null,
+    'layout_fixed_sidebar'=> null,
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_dark_mode'    => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -171,12 +171,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
-    'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_card'    => 'card-outline card-primary',
+    'classes_auth_header'  => '',
+    'classes_auth_body'    => '',
+    'classes_auth_footer'  => '',
+    'classes_auth_icon'    => '',
+    'classes_auth_btn'     => 'btn-flat btn-primary',
 
     /*
     |--------------------------------------------------------------------------

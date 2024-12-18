@@ -10,7 +10,6 @@ use Hash;
 
 class UserController extends Controller
 {
-    // app/Http/Controllers/UserController.php
 
     public function __construct()
     {
@@ -51,15 +50,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'role' => 'required'
+            'name'      => 'required',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|min:6',
+            'role'      => 'required'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
@@ -73,7 +72,7 @@ class UserController extends Controller
         $user = User::with('roles')->findOrFail($userId);
         $roles = Role::all(); // O si usas un paquete de roles como Spatie, puedes obtener los roles de esa forma
         return response()->json([
-            'user' => $user,
+            'user'  => $user,
             'roles' => $roles
         ]);
     }
@@ -83,16 +82,16 @@ class UserController extends Controller
         $user = User::findOrFail($userId);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:6',
-            'role' => 'required|in:admin,user',
+            'role'     => 'required|in:admin,user',
         ]);
     
         $user->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'role' => $request->input('role'),
+            'name'     => $request->input('name'),
+            'email'    => $request->input('email'),
+            'role'     => $request->input('role'),
             'password' => $request->filled('password') ? bcrypt($request->input('password')) : $user->password,
         ]);
     
@@ -106,30 +105,30 @@ class UserController extends Controller
     }
 
     // Mostrar el formulario de cambio de contraseña
-public function showChangePasswordForm()
-{
-    return view('change-password');
-}
-
-// Procesar el cambio de contraseña
-public function changePassword(Request $request)
-{
-    $request->validate([
-        'current_password' => 'required',
-        'new_password' => 'required|string|min:6|confirmed',
-    ]);
-
-    // Verificar si la contraseña actual es correcta
-    if (!Hash::check($request->current_password, auth()->user()->password)) {
-        return back()->withErrors(['current_password' => 'La contraseña actual es incorrecta']);
+    public function showChangePasswordForm()
+    {
+        return view('change-password');
     }
 
-    // Actualizar la contraseña
-    auth()->user()->update([
-        'password' => bcrypt($request->new_password),
-    ]);
+    // Procesar el cambio de contraseña
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|string|min:6|confirmed',
+        ]);
 
-    return redirect()->route('change-password')->with('success', 'Contraseña cambiada exitosamente.');
-}
+        // Verificar si la contraseña actual es correcta
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return back()->withErrors(['current_password' => 'La contraseña actual es incorrecta']);
+        }
+
+        // Actualizar la contraseña
+        auth()->user()->update([
+            'password' => bcrypt($request->new_password),
+        ]);
+
+        return redirect()->route('change-password')->with('success', 'Contraseña cambiada exitosamente.');
+    }
 
 }
